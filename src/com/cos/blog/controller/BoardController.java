@@ -8,18 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cos.blog.action.Action;
+import com.cos.blog.action.board.BoardHomeAction;
 import com.cos.blog.action.user.UsersJoinAction;
 import com.cos.blog.action.user.UsersJoinProcAction;
 import com.cos.blog.action.user.UsersLoginAction;
 
-// http://localhost:8000/blog/user
-@WebServlet("/user")
-public class UsersController extends HttpServlet {
+// http://localhost:8000/blog/board
+@WebServlet("/board")
+public class BoardController extends HttpServlet {
 	private final static String TAG = "UsersControll : ";
 	private static final long serialVersionUID = 1L;
        
     
-    public UsersController() {
+    public BoardController() {
         super();
     }
 
@@ -41,24 +42,10 @@ public class UsersController extends HttpServlet {
 	}
 	
 	public Action router(String cmd) {
-		if(cmd.equals("join")) {
-			// 회원가입 페이지로 이동 → controller, view 
-			return new UsersJoinAction();
-		} else if (cmd.equals("joinProc")) {
-			// 회원가입 진행한 후에 index.jsp 를 응답  → controller, model, view
-			return new UsersJoinProcAction();
-		} else if (cmd.equals("update")) {
-			// 회원수정 페이지로 이동 → 세션에 User 오브젝트를 가지고 있을 예정이니까 view
-		} else if (cmd.equals("updateProc")) {
-			// 회원수정 진행한 후에 index.jsp 로 이동
-		} else if (cmd.equals("delete")) {
-			// 회원수정 페이지에서 회원 탈퇴 버튼 누르면 회원 삭제를 진행. 로그아웃(세션 해제) 후 index.jsp 응답
-		} else if (cmd.equals("login")) {
-			// 회원 로그인 페이지로 이동 → view
-			return new UsersLoginAction();
-		} else if (cmd.equals("loginProc")) {
-			// 회원 로그인을 진행한 후에 세션에 등록하고 index.jsp 로 이동
-		}
+		if(cmd.equals("home")) {
+			// home 이동 
+			return new BoardHomeAction(); // Board 의 목록 
+		} 
 		return null;
 	} 
 

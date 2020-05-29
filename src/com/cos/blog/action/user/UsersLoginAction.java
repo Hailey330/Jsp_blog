@@ -1,6 +1,5 @@
 package com.cos.blog.action.user;
 
-//데이터가 필요없으니까 바로 view 이동 
 
 import java.io.IOException;
 
@@ -11,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cos.blog.action.Action;
 
-public class UsersJoinAction implements Action{
+public class UsersLoginAction implements Action{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dis = request.getRequestDispatcher("user/join.jsp");
+		RequestDispatcher dis = request.getRequestDispatcher("user/login.jsp");
 		dis.forward(request, response);	
 	}
 }
