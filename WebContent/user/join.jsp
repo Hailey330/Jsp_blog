@@ -5,7 +5,7 @@
 
 <div class = "container">
 
-	<form action="/blog/user?cmd=joinProc" method = "post" class="was-validated">
+	<form action="/blog/user?cmd=joinProc" method = "POST" class="was-validated">
 	  
 	  <div class="form-group">
 	    <label for="username">Username:</label>
@@ -35,7 +35,7 @@
 	    <div class="invalid-feedback">Please fill out this field.</div>
 	  </div>
 	  
-	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="submit" class="btn btn-primary">회원 가입하기</button>
 	
 	</form>
 </div>
