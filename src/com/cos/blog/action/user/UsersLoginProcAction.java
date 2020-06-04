@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,14 +42,22 @@ public class UsersLoginProcAction implements Action{
 			HttpSession session = request.getSession(); // 이미 만들어진 session 에 접근하기
 			session.setAttribute("principal", user); // principle - 인증 주체 
 			
+			if(request.getParameter("remember") != null) {
+				// key → Set-Cookie
+				// value → remember=ssar
+				Cookie cookie = new Cookie("remember", user.getUsername());
+				response.addCookie(cookie);
+			
+				// response.setHeader("Set-Cookie", "remember=ssar");
+			} else {
+				Cookie cookie = new Cookie("remember", "");
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
+			
 			Script.href("로그인 성공", "/blog/board?cmd=home", response);
 		} else {
 			Script.back("로그인 실패", response);
 		}
-		
-	
-	
-		
-		
 	}
 }

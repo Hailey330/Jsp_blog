@@ -6,6 +6,18 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Script {
 	
+	public static void getMessage(String msg, HttpServletResponse response) { 
+		try {
+			response.setCharacterEncoding("UTF-8"); // 실제 인코딩을 UTF-8로 해주고
+			response.setContentType("text/html;charset=UTF-8"); // 받는 쪽에서 UTF-8로 해석할 수 있도록 알려줌
+			PrintWriter out = response.getWriter();
+			
+			out.println("<h1>"+msg+"</h1>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// 뒤로 가기 
 	public static void back(String msg, HttpServletResponse response) { 
 		try {

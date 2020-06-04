@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  
     
 <%@ include file = "../include/nav.jsp" %>
 
 <div class = "container">
 
-	<form action="/blog/user?cmd=joinProc" method = "POST" class="was-validated">
+	<form action="/blog/user?cmd=joinProc" name="form" id="form" method="POST" class="was-validated" onsubmit="return validate()">
 	  
 	  <div class="form-group">
 	    <label for="username">Username:</label>
+	    <button type="button" class="btn btn-warning float-right" onClick="usernameCheck();">중복 확인</button>
 	    <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
 	    <div class="valid-feedback">Valid.</div>
 	    <div class="invalid-feedback">Please fill out this field.</div>
@@ -30,7 +32,9 @@
 	  
 	  <div class="form-group">
 	    <label for="address">Address:</label>
-	    <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" required>
+		<button type="button" class="btn btn-warning float-right" onClick="goPopup();">주소 검색</button>
+
+	    <input type="text" class="form-control" id="address" placeholder="Enter address" name="address" required readonly="readonly">
 	    <div class="valid-feedback">Valid.</div>
 	    <div class="invalid-feedback">Please fill out this field.</div>
 	  </div>
@@ -39,6 +43,8 @@
 	
 	</form>
 </div>
+
+<script src="/blog/js/join.js"></script>
 <%@ include file = "../include/footer.jsp" %>
 
 
