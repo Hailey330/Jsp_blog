@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.cos.blog.action.Action;
 import com.cos.blog.model.Board;
 import com.cos.blog.repository.BoardRepository;
+import com.cos.blog.util.HtmlParser;
 
 public class BoardHomeAction implements Action{
 	
@@ -23,10 +24,10 @@ public class BoardHomeAction implements Action{
 		
 		// 본문 짧게 가공하기 
 		for (Board board : boards) {
-			String preview = board.getContent();
-			preview = preview.substring(0, 10) + "...";
+			String preview = HtmlParser.getContentPreview(board.getContent());
 			board.setContent(preview);
 		}
+		
 		// 2. request 에 담아서 
 		request.setAttribute("boards", boards);
 		// 3. home.jsp 로 이동하기
