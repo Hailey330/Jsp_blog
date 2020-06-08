@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DetailResponseDto {
 	private Board board;
-	private String username; // 여기에 users 객체 넣으면 낭비 일어남 -> 다른 데이터까지 같이 불러오기 때문
+	private String username; // 여기에 users 객체 넣으면 낭비 일어남 → 다른 데이터까지 같이 불러오기 때문
 }

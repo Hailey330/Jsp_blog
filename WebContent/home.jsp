@@ -15,8 +15,8 @@
 	    <a href="/blog/board?cmd=detail&id=${board.id}" class="btn btn-primary">상세보기</a>
 	  </div>
 	</div>
-	
 </c:forEach>
+
 </div>
 <%@ include file = "include/footer.jsp" %>
 

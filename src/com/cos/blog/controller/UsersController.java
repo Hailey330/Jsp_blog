@@ -13,6 +13,8 @@ import com.cos.blog.action.user.UsersJoinProcAction;
 import com.cos.blog.action.user.UsersLoginAction;
 import com.cos.blog.action.user.UsersLoginProcAction;
 import com.cos.blog.action.user.UsersLogoutAction;
+import com.cos.blog.action.user.UsersUpdateAction;
+import com.cos.blog.action.user.UsersUpdateProcAction;
 import com.cos.blog.action.user.UsersUsernameCheckAction;
 
 // http://localhost:8000/blog/user
@@ -52,8 +54,10 @@ public class UsersController extends HttpServlet {
 			return new UsersJoinProcAction();
 		} else if (cmd.equals("update")) {
 			// 회원수정 페이지로 이동 → 세션에 User 오브젝트를 가지고 있을 예정이니까 view
+			return new UsersUpdateAction();
 		} else if (cmd.equals("updateProc")) {
 			// 회원수정 진행한 후에 index.jsp 로 이동
+			return new UsersUpdateProcAction();
 		} else if (cmd.equals("delete")) {
 			// 회원수정 페이지에서 회원 탈퇴 버튼 누르면 회원 삭제를 진행. 로그아웃(세션 해제) 후 index.jsp 응답
 		} else if (cmd.equals("login")) {
@@ -63,8 +67,10 @@ public class UsersController extends HttpServlet {
 			// 회원 로그인을 진행한 후에 세션에 등록하고 index.jsp 로 이동
 			return new UsersLoginProcAction();
 		} else if (cmd.equals("logout")) {
+			// 회원 로그아웃
 			return new UsersLogoutAction();
 		} else if (cmd.equals("usernameCheck")) {
+			// 회원 가입 아이디 중복확인
 			return new UsersUsernameCheckAction();
 		}
 	
