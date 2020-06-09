@@ -7,4 +7,4 @@
 %>
 		
 		<!--한번 써보기-->
-		<c:redirect url="/board?cmd=home" /> 
+		<c:redirect url="/board?cmd=home&page=0" /> 
