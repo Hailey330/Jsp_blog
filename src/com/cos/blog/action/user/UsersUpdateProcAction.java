@@ -57,12 +57,10 @@ public class UsersUpdateProcAction implements Action {
 		UsersRepository usersRepository = 
 				UsersRepository.getInstance();
 		int result = usersRepository.update(user);
-		System.out.println("result : " + result);
 
 		// 5번 - result == 1 이면 성공로직(index.jsp로 이동)
 		// update가 성공적일 때 세션이 재등록한다.
 		if(result == 1) {
-			System.out.println("result ::: " + result);
 			Users principal = usersRepository.findById(id);
 			System.out.println("UsersUpdateProc : username : " + principal.getUsername());
 			session.setAttribute("principal", principal);
@@ -71,8 +69,6 @@ public class UsersUpdateProcAction implements Action {
 		} else {
 			Script.back("회원정보 수정에 실패하였습니다.", response);
 		}
-
-		
 	}
-	}
+}
 
