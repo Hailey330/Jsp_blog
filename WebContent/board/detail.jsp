@@ -5,7 +5,8 @@
 
 <div class="container">
 	<!-- 자바 스크립트가 들어갈 부분이 아니면 javascript: 사용  --> 
-	<button class="btn btn-secondary" onclick="history.back()">뒤로가기</button>
+	<%@ include file="../include/goBack.jsp" %>
+	<!-- <button class="btn btn-secondary" onclick="history.back()">뒤로가기</button> -->
 	<!-- <button class="btn btn-primary" onclick="history.back()">뒤로 가기</button> -->
 	
 	<c:if test="${sessionScope.principal.id == dto.board.userId}">
