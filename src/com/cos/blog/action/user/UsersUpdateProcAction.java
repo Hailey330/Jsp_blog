@@ -43,7 +43,7 @@ public class UsersUpdateProcAction implements Action {
 		// 2번 - request에 title값과 content값 받기
 		int id = Integer.parseInt(request.getParameter("id"));
 		String rawPassword = request.getParameter("password");
-		String password= SHA256.encodeSha256("rawPassword");
+		String password= SHA256.encodeSha256(rawPassword);
 		String email= request.getParameter("email");
 		String address= request.getParameter("address");
 		
