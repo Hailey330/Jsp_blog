@@ -23,10 +23,10 @@ public class UsersLoginProcAction implements Action{
 		// 0. 유효성 검사 
 		if
 		(
-				request.getParameter("username").equals("") ||
 				request.getParameter("username") == null || 
-				request.getParameter("password").equals("") ||
-				request.getParameter("password") == null 
+				request.getParameter("username").equals("") ||
+				request.getParameter("password") == null ||
+				request.getParameter("password").equals("") 
 		) {
 			return;
 		}

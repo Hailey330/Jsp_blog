@@ -24,6 +24,111 @@ public class BoardRepository {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
+	public int count(String keyword) { 
+		final String SQL = "SELECT count(*) FROM board WHERE title LIKE ? OR content LIKE ?";
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				// count 퍼센트가 숫자가 아니라서 1로 주어짐
+				return rs.getInt(1);					
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "count(keyword) : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+		return -1;
+	}
+	
+		
+	public List<Board> findAll(int page, String keyword) { 
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT /*+ INDEX_DESC(BOARD SYS_C007779)*/ id,");
+		sb.append("userId, title, content, readCount, createDate ");
+		sb.append("FROM board ");
+		sb.append("WHERE title like ? OR content like ?");		
+		sb.append("OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY");
+		// System.out.println(sb.toString());
+		final String SQL = sb.toString();
+		List<Board> boards = new ArrayList<>();
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setInt(3, page*3);
+			// while 돌려서 rs → java 오브젝트에 넣기 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Board board = new Board(
+						rs.getInt("id"),
+						rs.getInt("userId"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getInt("readCount"),
+						rs.getTimestamp("createDate")
+				);
+				boards.add(board);			
+			}
+		
+			return boards;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "findAll(page, keyword) : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+		return null;
+	}
+	
+	
+	public int count() { 
+		final String SQL = "SELECT count(*) FROM board";
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getInt(1);					
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "count : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+		return -1;
+	}
+	
+	public int updateReadCount(int id) {
+		final String SQL = "UPDATE board SET readCount = readCount + 1 WHERE id =?";
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			// 물음표 완성하기
+			pstmt.setInt(1, id);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "updateReadCount : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
 	public int save(Board board) {
 		final String SQL = "INSERT INTO board(id, userId, title, content, readCount, createDate) VALUES(board_seq.nextval, ?, ?, ?, ?, sysdate)";
 		
@@ -84,7 +189,7 @@ public class BoardRepository {
 		return -1;
 	}
 	
-	public List<Board> findAll(int page) { // 매개 변수가 필요없다. 어차피 다 찾을 거니까
+	public List<Board> findAll(int page) { 
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT /*+ INDEX_DESC(BOARD SYS_C007779)*/ id,");
 		sb.append("userId, title, content, readCount, createDate ");
