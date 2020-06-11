@@ -6,8 +6,8 @@
 
 <div class="container">
 
-	<div class="col-md-12 m-2">
-		<form class="form-inline justify-content-end" action="/blog/board">
+	<div class="d-flex m-2 justify-content-end">
+		<form class="form-inline" style="display:inline-block !important" action="/blog/board">
 			<input type="hidden" name="cmd" value="search" /> <input type="hidden" name="page" value="0" /> <input name="keyword" class="form-control mr-sm-2" type="text" placeholder="Search">
 			<button class="btn btn-primary">검색</button>
 		</form>

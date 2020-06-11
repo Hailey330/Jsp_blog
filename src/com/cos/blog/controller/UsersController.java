@@ -13,6 +13,8 @@ import com.cos.blog.action.user.UsersJoinProcAction;
 import com.cos.blog.action.user.UsersLoginAction;
 import com.cos.blog.action.user.UsersLoginProcAction;
 import com.cos.blog.action.user.UsersLogoutAction;
+import com.cos.blog.action.user.UsersProfileUploadAction;
+import com.cos.blog.action.user.UsersProfileUploadProcAction;
 import com.cos.blog.action.user.UsersUpdateAction;
 import com.cos.blog.action.user.UsersUpdateProcAction;
 import com.cos.blog.action.user.UsersUsernameCheckAction;
@@ -72,8 +74,14 @@ public class UsersController extends HttpServlet {
 		} else if (cmd.equals("usernameCheck")) {
 			// 회원 가입 아이디 중복확인
 			return new UsersUsernameCheckAction();
+		} else if (cmd.equals("profileUpload")) {
+			// 회원 프로필 사진 
+			return new UsersProfileUploadAction();
+		} else if (cmd.equals("profileUploadProc")) {
+			// 회원 프로필 사진 업로드
+			return new UsersProfileUploadProcAction();
 		}
-	
+		
 		return null;
 	} 
 
