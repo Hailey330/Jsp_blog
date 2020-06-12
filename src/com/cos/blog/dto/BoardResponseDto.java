@@ -1,7 +1,5 @@
 package com.cos.blog.dto;
 
-import java.util.List;
-
 import com.cos.blog.model.Board;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DetailResponseDto {
-	private BoardResponseDto boardDto; // Board 게시글 한 개
-	private List<ReplyResponseDto> replyDtos; // Reply 댓글 여러개
+public class BoardResponseDto {
+
+	private Board board;
+	private String username; // 여기에 users 객체 넣으면 낭비 일어남 → 다른 데이터까지 같이 불러오기 때문
 }

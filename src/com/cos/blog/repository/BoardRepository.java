@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cos.blog.db.DBConn;
+import com.cos.blog.dto.BoardResponseDto;
 import com.cos.blog.dto.DetailResponseDto;
 import com.cos.blog.model.Board;
 
@@ -47,7 +48,111 @@ public class BoardRepository {
 		return -1;
 	}
 	
+	
+	public int count() { 
+		final String SQL = "SELECT count(*) FROM board";
 		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getInt(1);					
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "count : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+		return -1;
+	}
+	
+	
+	public int updateReadCount(int id) {
+		final String SQL = "UPDATE board SET readCount = readCount + 1 WHERE id =?";
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			// 물음표 완성하기
+			pstmt.setInt(1, id);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "updateReadCount : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
+	
+	public int save(Board board) {
+		final String SQL = "INSERT INTO board(id, userId, title, content, readCount, createDate) VALUES(board_seq.nextval, ?, ?, ?, ?, sysdate)";
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			// 물음표 완성하기
+			pstmt.setInt(1, board.getUserId());
+			pstmt.setString(2, board.getTitle());
+			pstmt.setString(3, board.getContent());
+			pstmt.setInt(4, board.getReadCount());
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "save : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
+	
+	public int update(Board board) {
+		final String SQL = "UPDATE board SET title=?, content=? WHERE id =?";
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			// 물음표 완성하기
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setInt(3, board.getId());
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "update : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
+	
+	public int deleteById(int id) {
+		System.out.println("BoardRepository : id : " + id);
+		final String SQL = "DELETE FROM board WHERE id=?";
+		
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			// 물음표 완성하기
+			pstmt.setInt(1, id);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "deleteById : " +e.getMessage());
+		} finally {
+			DBConn.close(conn, pstmt);
+		}
+		return -1;
+	}
+	
+	
 	public List<Board> findAll(int page, String keyword) { 
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT /*+ INDEX_DESC(BOARD SYS_C007779)*/ id,");
@@ -89,105 +194,6 @@ public class BoardRepository {
 		return null;
 	}
 	
-	
-	public int count() { 
-		final String SQL = "SELECT count(*) FROM board";
-		
-		try {
-			conn = DBConn.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			rs = pstmt.executeQuery();
-			
-			if (rs.next()) {
-				return rs.getInt(1);					
-			}
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(TAG + "count : " +e.getMessage());
-		} finally {
-			DBConn.close(conn, pstmt, rs);
-		}
-		return -1;
-	}
-	
-	public int updateReadCount(int id) {
-		final String SQL = "UPDATE board SET readCount = readCount + 1 WHERE id =?";
-		
-		try {
-			conn = DBConn.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			// 물음표 완성하기
-			pstmt.setInt(1, id);
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(TAG + "updateReadCount : " +e.getMessage());
-		} finally {
-			DBConn.close(conn, pstmt);
-		}
-		return -1;
-	}
-	
-	public int save(Board board) {
-		final String SQL = "INSERT INTO board(id, userId, title, content, readCount, createDate) VALUES(board_seq.nextval, ?, ?, ?, ?, sysdate)";
-		
-		try {
-			conn = DBConn.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			// 물음표 완성하기
-			pstmt.setInt(1, board.getUserId());
-			pstmt.setString(2, board.getTitle());
-			pstmt.setString(3, board.getContent());
-			pstmt.setInt(4, board.getReadCount());
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(TAG + "save : " +e.getMessage());
-		} finally {
-			DBConn.close(conn, pstmt);
-		}
-		return -1;
-	}
-	
-	public int update(Board board) {
-		final String SQL = "UPDATE board SET title=?, content=? WHERE id =?";
-		
-		try {
-			conn = DBConn.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			// 물음표 완성하기
-			pstmt.setString(1, board.getTitle());
-			pstmt.setString(2, board.getContent());
-			pstmt.setInt(3, board.getId());
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(TAG + "update : " +e.getMessage());
-		} finally {
-			DBConn.close(conn, pstmt);
-		}
-		return -1;
-	}
-	
-	public int deleteById(int id) {
-		System.out.println("BoardRepository : id : " + id);
-		final String SQL = "DELETE FROM board WHERE id=?";
-		
-		try {
-			conn = DBConn.getConnection();
-			pstmt = conn.prepareStatement(SQL);
-			// 물음표 완성하기
-			pstmt.setInt(1, id);
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(TAG + "deleteById : " +e.getMessage());
-		} finally {
-			DBConn.close(conn, pstmt);
-		}
-		return -1;
-	}
 	
 	public List<Board> findAll(int page) { 
 		StringBuilder sb = new StringBuilder();
@@ -260,14 +266,15 @@ public class BoardRepository {
 		return null;
 	}
 	
-	public DetailResponseDto findById(int id) { // 매개 변수가 필요없다. 어차피 다 찾을 거니까
+	
+	public BoardResponseDto findById(int id) { // 매개 변수가 필요없다. 어차피 다 찾을 거니까
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT b.id, b.userId, b.title, b.content, b.readCount, b.createDate, u.username ");
 		sb.append("FROM board b INNER JOIN users u ");
 		sb.append("ON b.userId = u.id ");
 		sb.append("WHERE b.id = ?");
 		final String SQL = sb.toString();
-		DetailResponseDto dto = null;
+		BoardResponseDto boardDto = null;
 		
 		try {
 			conn = DBConn.getConnection();
@@ -277,7 +284,7 @@ public class BoardRepository {
 			// if 돌려서 rs → java 오브젝트에 넣기 
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				dto = new DetailResponseDto();
+				boardDto = new BoardResponseDto();
 				Board board = Board.builder()
 						.id(rs.getInt(1))
 						.userId(rs.getInt(2))
@@ -286,10 +293,10 @@ public class BoardRepository {
 						.readCount(rs.getInt(5))
 						.createDate(rs.getTimestamp(6))
 						.build();
-				dto.setBoard(board);
-				dto.setUsername(rs.getString(7));
+				boardDto.setBoard(board);
+				boardDto.setUsername(rs.getString(7));
 			}
-			return dto;
+			return boardDto;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(TAG + "findById : " +e.getMessage());
