@@ -30,7 +30,6 @@ public class ReplyWriteProcAction implements Action{
 		System.out.println(sb.toString());
 		Gson gson = new Gson();
 		Reply reply = gson.fromJson(sb.toString(), Reply.class);
-		
 		// ReplyRepository 연결 → save(reply) : insert 
 		ReplyRepository replyRepository = 
 				ReplyRepository.getInstance();

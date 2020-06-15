@@ -1,7 +1,6 @@
 <%@page import="com.cos.blog.model.Users"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link href="/blog/css/styles.css" rel="stylesheet">
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +15,9 @@
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="/blog/css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -24,6 +26,7 @@
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+
 		<div class="justify-content-between collapse navbar-collapse" id="collapsibleNavbar">
 
 			<ul class="navbar-nav">
@@ -41,12 +44,13 @@
 
 			</ul>
 
-			<ul class="navbar-nav"> 
+			<ul class="navbar-nav">
 				<c:if test="${not empty sessionScope.principal}">
 					<li class="nav-item">
-						<a href="/blog/user?cmd=profileUpload">		
-						<img style="border-radius:20px" onerror="this.src='/blog/image/userProfile.png'" src="${sessionScope.principal.userProfile}" width="40px" height="40px" />
-						</a>	
+						<a href="/blog/user?cmd=profileUpload"> 
+							<img style="border-radius: 20px" onerror="this.src='/blog/image/userProfile.png'" src="${sessionScope.principal.userProfile}"
+							width="40px" height="40px" />
+						</a>
 					</li>
 				</c:if>
 			</ul>

@@ -6,14 +6,13 @@
 <div class="container">
 	<!-- 자바 스크립트가 들어갈 부분이 아니면 javascript: 사용  -->
 	<%@ include file="../include/goBack.jsp"%>
-	
+
 	<c:if test="${sessionScope.principal.id == detailDto.boardDto.board.userId}">
 		<a href="/blog/board?cmd=update&id=${detailDto.boardDto.board.id}" class="btn btn-warning">수정</a>
 		<button class="btn btn-danger" onclick="deleteById(${detailDto.boardDto.board.id})">삭제</button>
 	</c:if>
 
-	<br />
-	<br />
+	<br /> <br />
 	<h6 class="m-2">
 		작성자 : <i>${detailDto.boardDto.username}</i> 조회수 : <i>${detailDto.boardDto.board.readCount}</i>
 	</h6>
@@ -50,12 +49,15 @@
 
 							<c:forEach var="replyDto" items="${detailDto.replyDtos}">
 								<!-- 댓글 아이템 -->
-								<li class="media"><img onerror="this.src='/blog/image/userProfile.png'" src="${replyDto.userProfile}" alt="" class="img-circle">
+								<li id="reply-${replyDto.reply.id}" class="media"><img onerror="this.src='/blog/image/userProfile.png'" src="${replyDto.userProfile}" alt="" class="img-circle">
 									<div class="media-body">
 										<strong class="text-primary">${replyDto.username}</strong>
-										<p>
-											${replyDto.reply.content}
-										</p>
+										<p>${replyDto.reply.content}</p>
+									</div>
+									<div class="m-3">
+										<c:if test="${replyDto.reply.userId eq sessionScope.principal.id}">
+											<i onclick="replyDelete(${replyDto.reply.id})" class="material-icons i__btn">highlight_off</i>‍
+										</c:if>
 									</div></li>
 							</c:forEach>
 						</ul>

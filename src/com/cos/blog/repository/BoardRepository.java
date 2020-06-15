@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.cos.blog.db.DBConn;
 import com.cos.blog.dto.BoardResponseDto;
-import com.cos.blog.dto.DetailResponseDto;
 import com.cos.blog.model.Board;
 
 // DAO 
@@ -56,7 +55,6 @@ public class BoardRepository {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
-			
 			if (rs.next()) {
 				return rs.getInt(1);					
 			}
@@ -72,7 +70,7 @@ public class BoardRepository {
 	
 	
 	public int updateReadCount(int id) {
-		final String SQL = "UPDATE board SET readCount = readCount + 1 WHERE id =?";
+		final String SQL = "UPDATE board SET readCount = readCount + 1 WHERE id = ?";
 		
 		try {
 			conn = DBConn.getConnection();
@@ -113,7 +111,7 @@ public class BoardRepository {
 	
 	
 	public int update(Board board) {
-		final String SQL = "UPDATE board SET title=?, content=? WHERE id =?";
+		final String SQL = "UPDATE board SET title= ?, content= ? WHERE id = ?";
 		
 		try {
 			conn = DBConn.getConnection();
@@ -135,7 +133,7 @@ public class BoardRepository {
 	
 	public int deleteById(int id) {
 		System.out.println("BoardRepository : id : " + id);
-		final String SQL = "DELETE FROM board WHERE id=?";
+		final String SQL = "DELETE FROM board WHERE id = ?";
 		
 		try {
 			conn = DBConn.getConnection();
@@ -158,7 +156,7 @@ public class BoardRepository {
 		sb.append("SELECT /*+ INDEX_DESC(BOARD SYS_C007779)*/ id,");
 		sb.append("userId, title, content, readCount, createDate ");
 		sb.append("FROM board ");
-		sb.append("WHERE title like ? OR content like ?");		
+		sb.append("WHERE title like ? OR content like ? ");		
 		sb.append("OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY");
 		// System.out.println(sb.toString());
 		final String SQL = sb.toString();

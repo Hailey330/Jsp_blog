@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 .comment-wrapper .media-list {
 	max-height: 450px;
 	overflow: auto;
@@ -16,4 +14,9 @@
 .comment-wrapper .media-list .media {
 	border-bottom: 1px dashed #efefef;
 	margin-bottom: 25px;
+}
+
+.i__btn {
+	font-size:30px;
+	cursor: pointer;
 }
