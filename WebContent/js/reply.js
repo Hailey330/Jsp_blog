@@ -37,7 +37,7 @@ function replyWrite(boardId, userId) {
       url : "/blog/reply?cmd=writeProc",
       data : JSON.stringify(data),
       contentType : "application/json; charset=utf-8",
-      dataType : "json"
+      dataType : "j son"
    }).done(function(result) {
       console.log(result);
       // 정상 응답
